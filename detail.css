@@ -1,0 +1,117 @@
+body {
+    font-family: 'Trip Sans';
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 35px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
+
+header .brand {
+    font-size: 24px;
+    font-family: 'Trip Sans';
+    font-weight: bold;
+    font-style: normal;
+    align-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.brand img {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+header nav a.login {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.banner {
+    margin: 80px;
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+.banner h1 {
+    position: absolute;
+    font-size: 36px;
+    margin-top: 20px;
+    margin-left: 90px;
+    top: 35%;
+    transform: translateX(-20%);
+    z-index: 1;
+    color: white;
+    text-align: left;
+}
+
+.banner img {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+    filter: brightness(70%);
+}
+
+.resto-terdekat {
+    padding: 20px;
+    margin: 60px;
+    margin-top: 0px;
+}
+
+.resto-terdekat h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.resto-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.resto-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 234px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.resto-item:hover {
+    transform: scale(1.05);
+}
+
+.resto-item img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 200px;
+}
+
+.resto-details p {
+    margin: 7px 0;
+}
+
+.resto-details h3 {
+    margin: 5px 0;
+}
