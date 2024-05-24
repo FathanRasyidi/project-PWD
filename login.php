@@ -19,7 +19,6 @@
             <a href="index.php" style="font-weight: bold; margin-right: 20px">Home</a>
         </nav>
     </header>
-    halo
 </body>
 
 </html>
