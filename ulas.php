@@ -1,3 +1,116 @@
+<?php
+include 'koneksi.php';
+session_start();
+$op = "";
+
+$id_resto = "";
+$date = "";
+$nama_resto = "";
+$rating = "";
+$pesan = "";
+$image = "";
+$user_id = "";
+
+if (isset($_GET['resto'])) {
+    $id_resto = $_GET['resto'];
+} else {
+    $id_resto = "";
+}
+
+if ($id_resto == "1") {
+    $nama_resto = "Eastern Kopi TM Seturan";
+}else if ($id_resto == "2") {
+    $nama_resto = "Mie Gacoan Babarsari";
+}else if ($id_resto == "3") {
+    $nama_resto = "Ayam Goreng Suharti";
+}else if ($id_resto == "4") {
+    $nama_resto = "Food Truck Barsa City";
+}else if ($id_resto == "5") {
+    $nama_resto = "OTW Ramen";
+}else if ($id_resto == "6") {
+    $nama_resto = "J.Co - Plaza Ambarrukmo";
+}else if ($id_resto == "7") {
+    $nama_resto = "McDonalds Ambarukmo";
+}
+
+if (isset($_GET['op'])) {
+    $op = $_GET['op'];
+} else {
+    $op = "";
+}
+
+if ($op == 'edit'){
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM review WHERE id = $id";
+    $query = mysqli_query($connect, $sql);
+    $data = mysqli_fetch_array($query);
+
+    if (!$data) {
+        $error = "Data tidak ditemukan";
+    } else {
+        $rating = $data['rating'];
+        $id_resto = $data['id_resto'];
+        $nama_resto = $data['nama_resto'];
+        $date = $data['date'];
+        $pesan = $data['pesan'];
+        $image = $data['image'];
+        $user_id = $data['user_id'];
+    }
+}
+
+if (isset($_POST['submit'])){
+    $id_resto = $_POST['id_resto'];
+    $nama_resto = $_POST['nama_resto'];
+    $rating = $_POST['rating'];
+    $date = date("d-m-Y");
+    $pesan = $_POST['review'];
+    $user_id = $_SESSION['user'];
+    $image = $_FILES["foto"]["name"];
+
+    // untuk upload foto
+    if (isset($_FILES["foto"])) {
+        $file_name = $_FILES["foto"]["name"];
+        $file_tmp = $_FILES["foto"]["tmp_name"];
+        $file_type = $_FILES["foto"]["type"];
+        $file_size = $_FILES["foto"]["size"];
+        $file_error = $_FILES["foto"]["error"];
+
+        if ($file_error === 0) {
+            $file_destination = "uploads/" . $id_resto. "-" . $user_id . "_" . $file_name;
+            if (!is_dir("uploads")) {
+                mkdir("uploads");
+            }
+            move_uploaded_file($file_tmp, $file_destination);
+            $image = $file_destination;
+        } else {
+            $error = "Gagal mengunggah file";
+        }
+    }
+
+    //untuk insert data ke database
+    if ($id_resto && $rating && $pesan && $user_id && $date && $nama_resto){
+        if ($op == 'edit'){
+            $sql = "UPDATE review SET rating='$rating', date='$date', id_resto='$id_resto', nama_resto='$nama_resto', pesan='$pesan', image='$image', user_id='$user_id'  WHERE id = $id";
+            $query = mysqli_query($connect, $sql);
+            if ($query) {
+                header("location:detail$id_resto.php?op=ulasan_edit");
+            } else {
+                echo "<script>alert('Data gagal diubah');</script>";
+            }
+        }else {
+            $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id')";
+            $query = mysqli_query($connect, $sql);
+            if ($query) {
+                header("location:detail$id_resto.php?op=ulasan_sukses");
+            } else {
+                echo "<script>alert('Data gagal ditambahkan');</script>";
+            }
+        }
+    
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +151,6 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            /* Add this line to center the container */
             padding: 20px;
             padding-top: 0px;
             font-weight: bold;
@@ -112,29 +224,31 @@
     </div>
 
     <div class="container">
-        <form action="submit_review.php" method="post" enctype="multipart/form-data">
-            <label for="restaurant_name">Nama Restoran</label>
-            <input type="text" id="restaurant_name" name="restaurant_name" readonly>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id_resto" value="<?php echo $id_resto ?>">
+
+            <label for="nama_resto">Nama Restoran</label>
+            <input type="text" id="nama_resto" name="nama_resto" value="<?php echo $nama_resto ?>" readonly>
 
             <label for="rating">Bagaimana penilaian Anda tentang pengalaman Anda?</label>
             <div class="rating">
                 <select id="rating" name="rating" required>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5" selected>⭐⭐⭐⭐⭐</option>
+                    <option value="1" <?php if ($rating == "1") echo "selected"; ?>>⭐</option>
+                    <option value="2" <?php if ($rating == "2") echo "selected"; ?>>⭐⭐</option>
+                    <option value="3" <?php if ($rating == "3") echo "selected"; ?>>⭐⭐⭐</option>
+                    <option value="4" <?php if ($rating == "4") echo "selected"; ?>>⭐⭐⭐⭐</option>
+                    <option value="5" <?php if ($rating == "5") echo "selected"; ?>>⭐⭐⭐⭐⭐</option>
                 </select>
             </div>
 
             <label for="review">Tulis ulasan</label>
-            <textarea id="review" name="review" required></textarea>
+            <textarea id="review" name="review" required><?php echo $pesan ?></textarea>
 
-            <label for="foto">Tambahkan beberapa foto</label>
+            <label for="foto">Tambahkan foto</label>
             <p class="optional">Opsional</p>
-            <input type="file" id="foto" name="foto" multiple>
+            <input type="file" id="foto" name="foto">
 
-            <button type="submit" class="submit-btn"
+            <button type="submit" class="submit-btn" name="submit"
                 style="margin-top: 10px; border-radius: 10px; border: 2px solid black; padding: 8px 20px; background-color: transparent; color: black; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
                 onmouseover="this.style.backgroundColor='black'; this.style.color='white'"
                 onmouseout="this.style.backgroundColor='transparent'; this.style.color='black'">Post</button>

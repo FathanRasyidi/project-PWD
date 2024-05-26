@@ -25,7 +25,7 @@ if ($op == "delete") {
 
     if ($q1) {
         $sukses = "Berhasil menghapus data";
-        header("refresh:0;location:detail1.php");
+        header("refresh:0;location:detail4.php"); // jangan lupa ini diganti --------------------------------
     } else {
         $error = "Gagal menghapus data";
     }
@@ -33,15 +33,15 @@ if ($op == "delete") {
 }
 
 if ($op == 'ulasan_sukses') {
-    echo "<script>alert('Data berhasil ditambahkan');</script>";
-    header("refresh: 0;url=detail1.php");
+    echo "<script>alert('Data berhasil ditambahkan');</script>"; // jangan lupa ini juga diganti --------------------------------
+    header("refresh: 0;url=detail4.php");
 } else if ($op == 'ulasan_edit') {
-    echo "<script>alert('Data berhasil diubah');</script>";
-    header("refresh: 0;url=detail1.php");
+    echo "<script>alert('Data berhasil diubah');</script>"; // jangan lupa ini juga diganti --------------------------------
+    header("refresh: 0;url=detail4.php");
 }
 
 // untuk rata rata rating
-$sql = "SELECT rating FROM review WHERE id_resto = 1";
+$sql = "SELECT rating FROM review WHERE id_resto = 4"; // jangan lupa ini juga diganti idnya --------------------------------
 $result = mysqli_query($connect, $sql);
 
 if ($result->num_rows > 0) {
@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eastern Kopi TM Seturan</title>
+    <title>Food Truck Barsa City</title>
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="font/stylesheet.css"> <!-- Untuk font -->
     <link rel="stylesheet" href="index.css"> <!-- Untuk styling -->
@@ -177,28 +177,26 @@ if ($result->num_rows > 0) {
     </header>
 
     <section class="banner">
-        <img src="img/tm1.jpg" alt="Banner Image" style="filter: brightness(100%)">
+        <img src="img/ft1.jpg" alt="Banner Image" style="filter: brightness(100%)"> <!-- jangan lupa ini fotonya juga diganti -------------------------------- -->
     </section>
 
     <main>
         <div class="container">
             <div class="restaurant-info">
-                <h1>Eastern Kopi TM Seturan</h1>
+                <h1>Food Truck Barsa City</h1>
                 <p
                     style="float: right; margin-top: -40px; background-color: green; border-radius: 10px; display: inline-block; padding: 7px 7px; color: white;">
                     ⭐ <?php echo $average_rating ?></p>
-                <p style="opacity: 0.8; margin-top: 0px; margin-bottom: 0px;">Jl. Seturan Raya No.A9-10, Kledokan,
-                    Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281.</p>
-                <p style="font-weight: bold; margin-top: 0px;">(0274) 484441</p>
+                <p style="opacity: 0.8; margin-top: 0px; margin-bottom: 0px;">Ngentak, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281.</p>
+                <p style="font-weight: bold; margin-top: 0px;">081335953355</p>
                 <div class="tags">
                     <span>Coffee</span>
-                    <span>Tea</span>
                     <span>Smoothies</span>
                     <span>Snacks</span>
                 </div>
-                <p style="margin-bottom: 0px; opacity: 0.8">Buka : 09.00-22.00</p>
-                <p style="margin-top: 0px; opacity: 0.8">Rp. 25.000 - Rp. 95.000</p>
-                <a href="https://maps.app.goo.gl/bytvck8gzQkNozw78" target="_blank">
+                <p style="margin-bottom: 0px; opacity: 0.8">Buka : Senin,15.00-23.30</p>
+                <p style="margin-top: 0px; opacity: 0.8">Rp. 10.000 - Rp. 40.000</p>
+                <a href="https://maps.app.goo.gl/3RWJJP4bNFtZ6KXS6" target="_blank"> <!--- maps linknya -------------------------------------------->
                     <button
                         style="border-radius: 10px; border: 2px solid green; padding: 10px 20px; background-color: transparent; color: green; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
                         onmouseover="this.style.backgroundColor='green'; this.style.color='white'"
@@ -209,30 +207,15 @@ if ($result->num_rows > 0) {
             <section class="fitur">
                 <h2 style="margin-top: 0px;">Layanan</h2>
                 <div class="info">
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Pesan
-                            Antar</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Makanan
-                            halal</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Kopi</span>
+                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Drive-through</span></div>
+                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Dessert</span>
                     </div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Tempat
-                            duduk di area terbuka</span></div>
                     <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Makan di
                             tempat</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Pilihan
-                            menu vegetarian</span></div>
                     <div class="item"><span><img src="img/check.png" width="20px"
-                                style="margin-right: 10px">Toilet</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px"
-                                style="margin-right: 10px">Wi-Fi</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Menerima
-                            reservasi</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Kartu
-                            debit</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Kartu
-                            kredit</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Menu untuk
-                            anak-anak</span></div>
+                                style="margin-right: 10px">Salad prasmanan</span></div>
+                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Live Musik</span></div>
+                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Q-RIS</span></div>
                     <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Banyak
                             tempat parkir</span></div>
                 </div>
@@ -244,7 +227,7 @@ if ($result->num_rows > 0) {
                     <?php if (empty($_SESSION['user'])) { ?>
                         <a href="login.php?pesan=belum_login"> <!--- pesan=logindulu --->
                         <?php } else { ?>
-                        <a href="ulas.php?resto=1"> <!-- op=resto&id= --->
+                        <a href="ulas.php?resto=4"> <!-- id resto jgn lupa ---------------------------------------------->
                             <?php } ?>
                             <button
                                 style="border-radius: 10px; border: 2px solid black; padding: 10px 20px; background-color: transparent; color: black; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
@@ -260,7 +243,7 @@ if ($result->num_rows > 0) {
                     <h2>Ulasan</h2>
                     <div class="review">
                         <?php
-                        $sql = "select * from review where id_resto=1 order by date desc";
+                        $sql = "SELECT * FROM review WHERE id_resto = 4 ORDER BY date DESC"; // jangan lupa ini juga diganti idnya --------------------------------
                         $q = mysqli_query($connect, $sql);
                         while ($r = mysqli_fetch_array($q)) {
                             $id = $r['id'];
@@ -277,7 +260,7 @@ if ($result->num_rows > 0) {
                             $user_data = mysqli_fetch_array($user_result);
                             $nama = $user_data['name'];
                             ?>
-                        <div class="review-grid"> <!-- diulang sebanyak jumlah review -->
+                        <div class="review-grid">
                                 <div style="display: flex; align-items: center;">
                                     <img src="img/user.png" alt="profile image" class="user-img">
                                     <div>
@@ -301,8 +284,8 @@ if ($result->num_rows > 0) {
                                                 onmouseover="this.style.backgroundColor='black'; this.style.color='white'"
                                                 onmouseout="this.style.backgroundColor='transparent'; this.style.color='black'">Edit
                                                 Ulasan</button>
-                                        </a>
-                                        <a href="detail1.php?op=delete&id=<?php echo $id ?>"
+                                        </a> <!-- jangan lupa ini bawahnya juga diganti -------------------------------- -->
+                                        <a href="detail4.php?op=delete&id=<?php echo $id ?>" 
                                             onclick="return confirm('Yakin ingin menghapus ulasan?')">
                                         <button
                                             style="margin-left: 10px ;border-radius: 10px; border: 2px solid red; padding: 10px 20px; background-color: transparent; color: red; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"

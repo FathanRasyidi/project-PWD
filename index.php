@@ -1,3 +1,21 @@
+<?php
+session_start();
+$op = "";
+
+if (isset($_GET['pesan']) == 'logout') {
+    $op = $_GET['pesan'];
+} else {
+    $op = "";
+}
+
+if ($op == 'logout') {
+    echo "<script>alert('Anda telah berhasil logout');</script>";
+    header("refresh: 0;url=index.php");
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +35,11 @@
         </div>
         <nav>
             <a href="about.php">About Us</a>
-            <a href="login.php" class="login" style="background-color: #99BC85;">Login</a>
+            <?php if (empty($_SESSION['user'])) { ?>
+            <a href="login.php" class="login" style="background-color: green;">Login</a>
+            <?php } else { ?>
+                <a href="logout.php" class="login" style="background-color: red;">Logout</a>
+            <?php } ?>
         </nav>
     </header>
     <main>
@@ -26,100 +48,79 @@
             <h1>Temukan restoran <br> favorit anda.</h1>
         </section>
         <section class="resto-terdekat">
-            <h2>Restoran Terdekat</h2>
+            <h2>Restoran Terbaik Di Dekat Anda</h2>
             <div class="resto-list">
                 <a href="detail1.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/tm.jpg" alt="Resto Image">
+                        <img src="img/tm.jpg" alt="restoran">
                         <div class="resto-details">
                             <h3>Eastern Kopi TM Seturan</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 22:00</p>
+                            <p style="color: green; font-weight: bold;">09:00 - 22:00</p>
                             <p style="color: black; opacity: 0.6;">Jl. Seturan Raya No.A9-10, Kledokan, Caturtunggal.</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail2.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/gacoan.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>Mie Gacoan Babarsari</h3>
+                            <p style="color: green; font-weight: bold;">09:00 - 21:00</p>
+                            <p style="color: black; opacity: 0.6;">Jl. Babarsari Ruko Raflesia Blok B7-B10, Caturtunggal</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail3.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/suharti.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>Ayam Goreng Suharti</h3>
+                            <p style="color: green; font-weight: bold;">08:00 - 21:00</p>
+                            <p style="color: black; opacity: 0.6;">Jl. Laksda Adisucipto No.208, Janti, Caturtunggal.</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail4.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/ft.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>Food Truck Barsa City</h3>
+                            <p style="color: green; font-weight: bold;">15:00 - 23:30</p>
+                            <p style="color: black; opacity: 0.6;">Ngentak, Caturtunggal, Kec. Depok, Kabupaten Sleman.</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail5.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/otw.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>OTW Ramen</h3>
+                            <p style="color: green; font-weight: bold;">11:00 - 21:00</p>
+                            <p style="color: black; opacity: 0.6;">Jl. Sukun Raya No.8, Jaranan, Banguntapan.</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail6.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/jco.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>J.Co - Plaza Ambarrukmo</h3>
+                            <p style="color: green; font-weight: bold;">10:00 - 22:00</p>
+                            <p style="color: black; opacity: 0.6;">A - 35 Plaza Ambarukmo, Jl. Laksda Adisucipto.</p>
                         </div>
                     </div>
                 </a>
-                <a href="resto-details.php" style="text-decoration: none; color: black;">
+                <a href="detail7.php" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/food2.jpg" alt="Resto Image">
+                        <img src="img/mcd.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Resto Name</h3>
-                            <p
-                                style="background-color: #99BC85; border-radius: 10px; display: inline-block; padding: 5px 5px; color: white;">
-                                ⭐ 4.5</p>
-                            <p style="color: #99BC85; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Lokasi</p>
+                            <h3>McDonald's Ambarukmo</h3>
+                            <p style="color: green; font-weight: bold;">24 Jam</p>
+                            <p style="color: black; opacity: 0.6;">Jl. Laksda Adisucipto No.21, Ambarukmo, Caturtunggal.</p>
                         </div>
                     </div>
                 </a>
-                <!-- Add more resto items as needed -->
+                <!--- kalau mau ditambah --->
             </div>
         </section>
     </main>

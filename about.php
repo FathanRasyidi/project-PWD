@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="index.css"> <!-- Untuk styling -->
     <style>
         .about {
+            margin: 80px;
             display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
+            justify-content: space-between;
+            margin-top: 60px;
+            margin-left: 150px;
+            margin-right: 150px;
         }
 
         .tentang {
@@ -20,14 +23,14 @@
         }
 
         .tentang-img {
-            width: 35%;
-            display: flex;
+            align-content: center;
+            margin-right: 50px;
         }
 
         .tentang h1 {
             font-size: 2em;
             margin-bottom: 20px;
-            text-align: center;
+            text-align: left;
         }
 
         .tentang p {
@@ -35,18 +38,19 @@
             line-height: 1.5em;
         }
 
-        /* .tentang img {
-            width: 50%;
-        } */
+        .tentang img {
+            width: 10%;
+        }
 
         .manajemen {
             margin-top: 50px;
             text-align: center;
+            
         }
 
         .manajemen h1 {
             font-size: 2em;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
 
         .manajemen-list {
@@ -81,7 +85,7 @@
     <main>
         <section class="about">
             <div class="tentang">
-                <h1>Tentang kita</h1>
+                <h1 style="border-bottom: 2px solid red; width: 40%;">Tentang kita</h1>
                 <p>DishCovery adalah sebuah website yang menyediakan informasi mengenai restoran-restoran yang ada di
                     Yogyakarta. Kami menyediakan informasi mengenai restoran terdekat, restoran terpopuler, dan juga
                     rekomendasi restoran yang bisa anda coba. Kami juga menyediakan informasi mengenai menu-menu yang
@@ -89,14 +93,9 @@
                     restoran tersebut, serta harga-harga yang ditawarkan. Kami berharap dengan adanya website ini, anda
                     bisa
                     menemukan restoran yang sesuai dengan keinginan anda.</p>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At accusantium quibusdam assumenda ad
-                    recusandae dolores, non quos consequatur velit, voluptate fugit ea inventore dolore. Sapiente cumque
-                    earum voluptate ut aperiam consectetur, facere ea voluptatem similique. In, voluptas quibusdam id
-                    distinctio, magni odio autem totam esse, voluptatum quae eveniet dolor quas!
-                </p>
             </div>
             <div class="tentang-img">
-                <img src="img/logo.png" alt="logo">
+                <img src="img/logo.png" alt="logo" width="300px">
             </div>
         </section>
 
@@ -106,10 +105,8 @@
                 <div class="manajemen-item">
                     <img src="img/user.png" alt="COO">
                     <h3>Fathan Rasyidi</h3>
-                    <p>Founder</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia voluptatum possimus cumque!
-                        Saepe provident nobis quis aliquam eligendi est sequi vero accusamus assumenda, laudantium
-                        facere.</p>
+                    <p style="opacity: 0.6">Founder</p>
+                    <p>Hanya orang biasa yang kepoan. Terus berusaha walaupun pemula. Sebelahku paling hobi spam Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque a earum eum accusantium nam fuga amet nostrum, architecto officia cupiditate at, ducimus porro libero minima praesentium dolorem neque, quam eveniet.</p>
                 </div>
                 <div class="manajemen-item">
                     <img src="img/user.png" alt="CFO">
