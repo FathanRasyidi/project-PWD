@@ -76,7 +76,7 @@ if (isset($_POST['submit'])){
         $file_error = $_FILES["foto"]["error"];
 
         if ($file_error === 0) {
-            $file_destination = "uploads/" . $id_resto. "-" . $user_id . "_" . $file_name;
+            $file_destination = "uploads/" . $id_resto. "-". rand(1,1000). "_". $date . "_" . $user_id . "_" . $file_name;
             if (!is_dir("uploads")) {
                 mkdir("uploads");
             }
