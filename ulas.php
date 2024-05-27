@@ -10,6 +10,7 @@ $rating = "";
 $pesan = "";
 $image = "";
 $user_id = "";
+$edit = "";
 
 if (isset($_GET['resto'])) {
     $id_resto = $_GET['resto'];
@@ -66,6 +67,7 @@ if (isset($_POST['submit'])){
     $pesan = $_POST['review'];
     $user_id = $_SESSION['user'];
     $image = $_FILES["foto"]["name"];
+    $edit = "";
 
     // untuk upload foto
     if (isset($_FILES["foto"])) {
@@ -86,11 +88,12 @@ if (isset($_POST['submit'])){
             $error = "Gagal mengunggah file";
         }
     }
-
+    
     //untuk insert data ke database
     if ($id_resto && $rating && $pesan && $user_id && $date && $nama_resto){
         if ($op == 'edit'){
-            $sql = "UPDATE review SET rating='$rating', date='$date', id_resto='$id_resto', nama_resto='$nama_resto', pesan='$pesan', image='$image', user_id='$user_id'  WHERE id = $id";
+            $edit = true;
+            $sql = "UPDATE review SET rating='$rating', date='$date', id_resto='$id_resto', nama_resto='$nama_resto', pesan='$pesan', image='$image', user_id='$user_id', edited ='$edit'  WHERE id = $id";
             $query = mysqli_query($connect, $sql);
             if ($query) {
                 header("location:detail$id_resto.php?op=ulasan_edit");
@@ -98,7 +101,7 @@ if (isset($_POST['submit'])){
                 echo "<script>alert('Data gagal diubah');</script>";
             }
         }else {
-            $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id')";
+            $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id, edited) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id','$edit')";
             $query = mysqli_query($connect, $sql);
             if ($query) {
                 header("location:detail$id_resto.php?op=ulasan_sukses");

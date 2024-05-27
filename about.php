@@ -45,7 +45,7 @@
         .manajemen {
             margin-top: 50px;
             text-align: center;
-            
+
         }
 
         .manajemen h1 {
@@ -106,14 +106,17 @@
                     <img src="img/user.png" alt="COO">
                     <h3>Fathan Rasyidi</h3>
                     <p style="opacity: 0.6">Founder</p>
-                    <p>Hanya orang biasa yang kepoan. Terus berusaha walaupun pemula. Sebelahku paling hobi spam Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque a earum eum accusantium nam fuga amet nostrum, architecto officia cupiditate at, ducimus porro libero minima praesentium dolorem neque, quam eveniet.</p>
+                    <p>Hanya orang biasa yang kepoan. Terus berusaha walaupun pemula. Sebelahku paling hobi spam Lorem
+                        ipsum dolor sit amet consectetur adipisicing elit. Itaque a earum eum accusantium nam fuga amet
+                        nostrum, architecto officia cupiditate at, ducimus porro libero minima praesentium dolorem
+                        neque, quam eveniet.</p>
                 </div>
                 <div class="manajemen-item">
                     <img src="img/user.png" alt="CFO">
                     <h3>Aditya Rahman</h3>
                     <p>Co-Founder</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi voluptas expedita incidunt amet,
-                        soluta beatae. Necessitatibus quia adipisci hic ea autem, fugit corrupti consectetur incidunt.
+                    <p>Bukan siapa-siapa, tidak ada spesial-spesialnya karena kalau spesial karetnya dua. Semoga aku
+                        bisa jadi anak yang sholeh dan berbakti kepada mama papa.
                     </p>
                 </div>
             </div>

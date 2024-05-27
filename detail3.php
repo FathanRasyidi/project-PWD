@@ -137,6 +137,13 @@ if ($result->num_rows > 0) {
             padding-top: 10px;
             margin-bottom: 20px;
             border-radius: 10px;
+            position: relative;
+        }
+
+        #pesan-edited {
+            position: absolute;
+            right: 10px;
+            top: 10px;
         }
 
         .review-img {
@@ -262,6 +269,7 @@ if ($result->num_rows > 0) {
                             $pesan = $r['pesan'];
                             $image = $r['image'];
                             $user_id = $r['user_id'];
+                            $edit = $r['edited'];
                             // Untuk Mengambil nama dari user_id
                             $user_query = "SELECT name FROM user WHERE user_id = $user_id";
                             $user_result = mysqli_query($connect, $user_query);
@@ -276,6 +284,14 @@ if ($result->num_rows > 0) {
                                         <p style="margin-bottom: 10px"><?php for ($i = 0; $i < $rating; $i++) {
                                             echo "⭐";
                                         } ?> | <?php echo $date ?></p>
+                                    </div>
+                                    <div id="pesan-edited">
+                                        <div>
+                                        <?php if($edit==true) { ?>
+                                            Edited
+                                            <img src="img/edit.png" alt="edit" style=" width: 15px; height: 15px;">
+                                        <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <p style="opacity: 0.7;"><?php echo $pesan ?></p>
