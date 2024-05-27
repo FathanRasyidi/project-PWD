@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Bulan Mei 2024 pada 14.06
+-- Waktu pembuatan: 27 Bulan Mei 2024 pada 17.30
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -35,17 +35,19 @@ CREATE TABLE `review` (
   `nama_resto` varchar(50) NOT NULL,
   `pesan` text NOT NULL,
   `image` mediumblob NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `edited` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `review`
 --
 
-INSERT INTO `review` (`id`, `rating`, `date`, `id_resto`, `nama_resto`, `pesan`, `image`, `user_id`) VALUES
-(23, 5, '26-05-2024', 1, 'Eastern Kopi TM Seturan', 'Mantab', 0x75706c6f6164732f312d315f4775642e706e67, 1),
-(27, 4, '26-05-2024', 2, 'Mie Gacoan Babarsari', 'Makanan terlalu pedas', '', 1),
-(31, 5, '26-05-2024', 3, 'Ayam Goreng Suharti', 'Restoran legendaris di yogyakarta', '', 1);
+INSERT INTO `review` (`id`, `rating`, `date`, `id_resto`, `nama_resto`, `pesan`, `image`, `user_id`, `edited`) VALUES
+(27, 4, '27-05-2024', 2, 'Mie Gacoan Babarsari', 'Makanan terlalu pedas', '', 1, 1),
+(31, 5, '26-05-2024', 3, 'Ayam Goreng Suharti', 'Restoran legendaris di yogyakarta', '', 1, 0),
+(34, 2, '26-05-2024', 1, 'Eastern Kopi TM Seturan', 'Jelek', '', 12, 0),
+(44, 5, '26-05-2024', 1, 'Eastern Kopi TM Seturan', 'Mantab', 0x75706c6f6164732f312d3934395f32362d30352d323032345f31315f662e706e67, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -66,7 +68,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `username`, `name`, `password`) VALUES
 (1, 'fathanras', 'Fathan Rasyidi', '123'),
-(11, 'adityarahman', 'Aditya Rahman', 'abc');
+(11, 'adityarahman', 'Aditya Rahman', 'abc'),
+(12, 'admin', 'Guest', '111');
 
 --
 -- Indexes for dumped tables
@@ -94,13 +97,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
