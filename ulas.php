@@ -101,7 +101,7 @@ if (isset($_POST['submit'])){
                 echo "<script>alert('Data gagal diubah');</script>";
             }
         }else {
-            $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id, edited) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id','$edit')";
+            $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id')";
             $query = mysqli_query($connect, $sql);
             if ($query) {
                 header("location:detail$id_resto.php?op=ulasan_sukses");
