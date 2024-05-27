@@ -22,6 +22,12 @@ if (isset($_GET['pesan'])){
         header("url=login.php");
     }
 }
+// sudah benar tetapi harus lewat login
+if (isset($_COOKIE['user'])) {
+    $_SESSION['user'] = $_COOKIE['user'];
+    header("location:index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +41,7 @@ if (isset($_GET['pesan'])){
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="font/stylesheet.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
     <title>Sign In/Sign Up</title>
 </head>
 
