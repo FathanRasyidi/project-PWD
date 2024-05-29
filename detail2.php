@@ -288,7 +288,7 @@ if ($result->num_rows > 0) {
                                             echo "⭐";
                                         } ?> | <?php echo $date ?></p>
                                     </div>
-                                    <div id="pesan-edited">
+                                    <div id="pesan-edited" style="opacity: 0.4">
                                         <div>
                                         <?php if($edit==true) { ?>
                                             Edited
