@@ -261,7 +261,7 @@ if ($result->num_rows > 0) {
                             $pesan = $r['pesan'];
                             $image = $r['image'];
                             $user_id = $r['user_id'];
-                            $edited = $r['edited'];
+                            $edit = $r['edited'];
                             // Untuk Mengambil nama dari user_id
                             $user_query = "SELECT name FROM user WHERE user_id = $user_id";
                             $user_result = mysqli_query($connect, $user_query);
