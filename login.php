@@ -22,7 +22,7 @@ if (isset($_GET['pesan'])){
         header("url=login.php");
     }
 }
-// sudah benar tetapi harus lewat login
+
 if (isset($_COOKIE['user'])) {
     $_SESSION['user'] = $_COOKIE['user'];
     header("location:index.php");

@@ -13,6 +13,11 @@ if ($op == 'logout') {
     header("refresh: 0;url=index.php");
 }
 
+if (isset($_COOKIE['user']) &&!isset($_SESSION['user'])) {
+    $_SESSION['user'] = $_COOKIE['user'];
+    header("location:index.php");
+    exit();
+}
 
 ?>
 
