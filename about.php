@@ -106,8 +106,8 @@
                     <img src="img/user.png" alt="COO">
                     <h3>Fathan Rasyidi</h3>
                     <p style="opacity: 0.6">Founder</p>
-                    <p>Hanya orang biasa yang kepoan. Terus berusaha walaupun pemula. Sebelahku paling hobi spam Lorem
-                        ipsum dolor sit amet consectetur adipisicing elit. Itaque a earum eum accusantium nam fuga amet
+                    <p>Hanya orang biasa yang kepoan. Sebelahku paling hobi spam Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Itaque a earum eum accusantium nam fuga amet
                         nostrum, architecto officia cupiditate at, ducimus porro libero minima praesentium dolorem
                         neque, quam eveniet.</p>
                 </div>
