@@ -3,65 +3,75 @@ include 'koneksi.php';
 session_start();
 $user_session = empty($_SESSION['user']) ? '' : $_SESSION['user'];
 
-if (isset($_COOKIE['user']) &&!isset($_SESSION['user'])) {
+if (isset($_COOKIE['user']) && !isset($_SESSION['user'])) {
     $_SESSION['user'] = $_COOKIE['user'];
-    header("location:detail4.php");
+    header("location:detail1.php");
     exit();
 }
 
-if (isset($_GET["op"])) {
-    $op = $_GET["op"];
-} else {
-    $op = "";
-}
-
-if ($op == "delete") {
-    $id = $_GET["id"];
-    //untuk menghapus gambar jika ada
-    $sql2 = "SELECT image FROM review WHERE id = '$id'";
-    $q2 = mysqli_query($connect, $sql2);
-    $row = mysqli_fetch_assoc($q2);
-    $imagePath = isset($row['image']) ? $row['image'] : '';
-    if (file_exists($imagePath)) {
-        unlink($imagePath);
-    }
-    //hapus data
-    $sql1 = "delete from review where id = '$id'";
-    $q1 = mysqli_query($connect, $sql1);
-
-    if ($q1) {
-        $sukses = "Berhasil menghapus data";
-        header("refresh:0;location:detail4.php"); // jangan lupa ini diganti --------------------------------
+//untuk menampilkan data restoran
+if (isset($_GET["resto"])) {
+    $resto_id = $_GET["resto"];
+    if (isset($_GET["op"])) {
+        $op = $_GET["op"];
     } else {
-        $error = "Gagal menghapus data";
+        $op = "";
     }
 
-}
+    if ($op == "delete") {
+        $id = $_GET["id"];
+        //untuk menghapus gambar jika ada
+        $sql2 = "SELECT image FROM review WHERE id = '$id'";
+        $q2 = mysqli_query($connect, $sql2);
+        $row = mysqli_fetch_assoc($q2);
+        $imagePath = isset($row['image']) ? $row['image'] : '';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        //hapus data
+        $sql1 = "delete from review where id = '$id'";
+        $q1 = mysqli_query($connect, $sql1);
 
-if ($op == 'ulasan_sukses') {
-    echo "<script>alert('Data berhasil ditambahkan');</script>"; // jangan lupa ini juga diganti --------------------------------
-    header("refresh: 0;url=detail4.php");
-} else if ($op == 'ulasan_edit') {
-    echo "<script>alert('Data berhasil diubah');</script>"; // jangan lupa ini juga diganti --------------------------------
-    header("refresh: 0;url=detail4.php");
-}
+        if ($q1) {
+            $sukses = "Berhasil menghapus data";
+            header("refresh:0;location:detail$.php?resto=$resto_id");
+        } else {
+            $error = "Gagal menghapus data";
+        }
 
-// untuk rata rata rating
-$sql = "SELECT rating FROM review WHERE id_resto = 4"; // jangan lupa ini juga diganti idnya --------------------------------
-$result = mysqli_query($connect, $sql);
-
-if ($result->num_rows > 0) {
-    $total_rating = 0;
-    $i = 0;
-    while ($row = mysqli_fetch_array($result)) {
-        $total_rating += $row["rating"];
-        $i++;
     }
-    $average_rating = $total_rating / $i;
-    $average_rating = round($average_rating, 1);
+
+    if ($op == 'ulasan_sukses') {
+        echo "<script>alert('Data berhasil ditambahkan');</script>";
+        header("refresh: 0;url=detail.php?resto=$resto_id");
+    } else if ($op == 'ulasan_edit') {
+        echo "<script>alert('Data berhasil diubah');</script>";
+        header("refresh: 0;url=detail.php?resto=$resto_id");
+    }
+
+    // untuk rata rata rating
+    $sql = "SELECT rating FROM review WHERE id_resto = '$resto_id'";
+    $result = mysqli_query($connect, $sql);
+
+    if ($result->num_rows > 0) {
+        $total_rating = 0;
+        $i = 0;
+        while ($row = mysqli_fetch_array($result)) {
+            $total_rating += $row["rating"];
+            $i++;
+        }
+        $average_rating = $total_rating / $i;
+        $average_rating = round($average_rating, 1);
+    } else {
+        $average_rating = "-";
+    }
 } else {
-    $average_rating = "-";
+    $resto_id = "";
 }
+
+$sqlR = "SELECT * FROM restoran where id_resto = '$resto_id'";
+$qR = mysqli_query($connect, $sqlR);
+$db = mysqli_fetch_array($qR);
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +80,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Truck Barsa City</title>
+    <title><?php echo $db['nama_resto'] ?></title>
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="font/stylesheet.css"> <!-- Untuk font -->
     <link rel="stylesheet" href="index.css"> <!-- Untuk styling -->
@@ -190,26 +200,32 @@ if ($result->num_rows > 0) {
     </header>
 
     <section class="banner">
-        <img src="img/ft1.jpg" alt="Banner Image" style="filter: brightness(100%)"> <!-- jangan lupa ini fotonya juga diganti -------------------------------- -->
+        <img src="img/banner<?php echo $resto_id ?>.jpg" alt="Banner Image" style="filter: brightness(100%)">
     </section>
 
     <main>
         <div class="container">
             <div class="restaurant-info">
-                <h1>Food Truck Barsa City</h1>
+                <h1><?php echo $db['nama_resto'] ?></h1>
                 <p
                     style="float: right; margin-top: -40px; background-color: green; border-radius: 10px; display: inline-block; padding: 7px 7px; color: white;">
                     ⭐ <?php echo $average_rating ?></p>
-                <p style="opacity: 0.8; margin-top: 0px; margin-bottom: 0px;">Ngentak, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281.</p>
-                <p style="font-weight: bold; margin-top: 0px;">081335953355</p>
+                <p style="opacity: 0.8; margin-top: 0px; margin-bottom: 0px;"><?php echo $db['alamat'] ?></p>
+                <p style="font-weight: bold; margin-top: 0px;"><?php echo $db['telp'] ?></p>
                 <div class="tags">
-                    <span>Coffee</span>
-                    <span>Smoothies</span>
-                    <span>Snacks</span>
+                    <?php
+                    $sqlK = "SELECT kategori FROM restoran WHERE id_resto = '$resto_id'";
+                    $qK = mysqli_query($connect, $sqlK);
+                    while ($k = mysqli_fetch_array($qK)) {
+                        $kategori = explode(',', $k['kategori']);
+                        foreach ($kategori as $kate) { ?>
+                            <span><?php echo $kate; ?></span>
+                        <?php }
+                    } ?>
                 </div>
-                <p style="margin-bottom: 0px; opacity: 0.8">Buka : Senin,15.00-23.30</p>
-                <p style="margin-top: 0px; opacity: 0.8">Rp. 10.000 - Rp. 40.000</p>
-                <a href="https://maps.app.goo.gl/3RWJJP4bNFtZ6KXS6" target="_blank"> <!--- maps linknya -------------------------------------------->
+                <p style="margin-bottom: 0px; opacity: 0.8">Buka : <?php echo $db['jam'] ?></p>
+                <p style="margin-top: 0px; opacity: 0.8"><?php echo $db['harga'] ?></p>
+                <a href="<?php echo $db['map'] ?>" target="_blank">
                     <button
                         style="border-radius: 10px; border: 2px solid green; padding: 10px 20px; background-color: transparent; color: green; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
                         onmouseover="this.style.backgroundColor='green'; this.style.color='white'"
@@ -220,17 +236,18 @@ if ($result->num_rows > 0) {
             <section class="fitur">
                 <h2 style="margin-top: 0px;">Layanan</h2>
                 <div class="info">
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Drive-through</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Dessert</span>
-                    </div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Makan di
-                            tempat</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px"
-                                style="margin-right: 10px">Salad prasmanan</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Live Musik</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Q-RIS</span></div>
-                    <div class="item"><span><img src="img/check.png" width="20px" style="margin-right: 10px">Banyak
-                            tempat parkir</span></div>
+                    <?php
+                    $sqlL = "SELECT layanan FROM restoran WHERE id_resto = '$resto_id'";
+                    $qL = mysqli_query($connect, $sqlL);
+                    while ($l = mysqli_fetch_array($qL)) {
+                        $layanan = explode(',', $l['layanan']);
+                        foreach ($layanan as $laya) { ?>
+                            <div class="item">
+                                <span><img src="img/check.png" width="20px"
+                                        style="margin-right: 10px"><?php echo $laya ?></span>
+                            </div>
+                        <?php }
+                    } ?>
                 </div>
             </section>
 
@@ -240,7 +257,7 @@ if ($result->num_rows > 0) {
                     <?php if (empty($_SESSION['user'])) { ?>
                         <a href="login.php?pesan=belum_login"> <!--- pesan=logindulu --->
                         <?php } else { ?>
-                        <a href="ulas.php?resto=4"> <!-- id resto jgn lupa ---------------------------------------------->
+                        <a href="ulas.php?resto=<?php echo $resto_id ?>"> <!-- op=resto&id= --->
                             <?php } ?>
                             <button
                                 style="border-radius: 10px; border: 2px solid black; padding: 10px 20px; background-color: transparent; color: black; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
@@ -256,7 +273,7 @@ if ($result->num_rows > 0) {
                     <h2>Ulasan</h2>
                     <div class="review">
                         <?php
-                        $sql = "SELECT * FROM review WHERE id_resto = 4 ORDER BY date DESC"; // jangan lupa ini juga diganti idnya --------------------------------
+                        $sql = "select * from review where id_resto='$resto_id' order by date desc";
                         $q = mysqli_query($connect, $sql);
                         while ($r = mysqli_fetch_array($q)) {
                             $id = $r['id'];
@@ -274,7 +291,7 @@ if ($result->num_rows > 0) {
                             $user_data = mysqli_fetch_array($user_result);
                             $nama = $user_data['name'];
                             ?>
-                        <div class="review-grid">
+                        <div class="review-grid"> <!-- diulang sebanyak jumlah review -->
                                 <div style="display: flex; align-items: center;">
                                     <img src="img/user.png" alt="profile image" class="user-img">
                                     <div>
@@ -285,10 +302,10 @@ if ($result->num_rows > 0) {
                                     </div>
                                     <div id="pesan-edited" style="opacity: 0.4">
                                         <div>
-                                        <?php if($edit==true) { ?>
-                                            Edited
-                                            <img src="img/edit.png" alt="edit" style=" width: 15px; height: 15px;">
-                                        <?php } ?>
+                                            <?php if ($edit == true) { ?>
+                                                Edited
+                                                <img src="img/edit.png" alt="edit" style=" width: 15px; height: 15px;">
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -306,14 +323,14 @@ if ($result->num_rows > 0) {
                                                 onmouseover="this.style.backgroundColor='black'; this.style.color='white'"
                                                 onmouseout="this.style.backgroundColor='transparent'; this.style.color='black'">Edit
                                                 Ulasan</button>
-                                        </a> <!-- jangan lupa ini bawahnya juga diganti -------------------------------- -->
-                                        <a href="detail4.php?op=delete&id=<?php echo $id ?>" 
+                                        </a>
+                                        <a href="detail.php?resto=<?php echo $resto_id ?>&op=delete&id=<?php echo $id ?>"
                                             onclick="return confirm('Yakin ingin menghapus ulasan?')">
-                                        <button
-                                            style="margin-left: 10px ;border-radius: 10px; border: 2px solid red; padding: 10px 20px; background-color: transparent; color: red; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
-                                            onmouseover="this.style.backgroundColor='red'; this.style.color='white'"
-                                            onmouseout="this.style.backgroundColor='transparent'; this.style.color='red'">Hapus
-                                            Ulasan</button>
+                                            <button
+                                                style="margin-left: 10px ;border-radius: 10px; border: 2px solid red; padding: 10px 20px; background-color: transparent; color: red; text-decoration: none; font-family: 'Trip Sans'; font-weight: bold; font-size: 16px"
+                                                onmouseover="this.style.backgroundColor='red'; this.style.color='white'"
+                                                onmouseout="this.style.backgroundColor='transparent'; this.style.color='red'">Hapus
+                                                Ulasan</button>
                                         </a>
                                     <?php } ?>
                                 </div>

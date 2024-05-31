@@ -18,21 +18,11 @@ if (isset($_GET['resto'])) {
     $id_resto = "";
 }
 
-if ($id_resto == "1") {
-    $nama_resto = "Eastern Kopi TM Seturan";
-}else if ($id_resto == "2") {
-    $nama_resto = "Mie Gacoan Babarsari";
-}else if ($id_resto == "3") {
-    $nama_resto = "Ayam Goreng Suharti";
-}else if ($id_resto == "4") {
-    $nama_resto = "Food Truck Barsa City";
-}else if ($id_resto == "5") {
-    $nama_resto = "OTW Ramen";
-}else if ($id_resto == "6") {
-    $nama_resto = "J.Co - Plaza Ambarrukmo";
-}else if ($id_resto == "7") {
-    $nama_resto = "McDonalds Ambarukmo";
-}
+//untuk mengambil nama restoran
+$sqlR = "SELECT nama_resto FROM restoran where id_resto = '$id_resto'";
+$qR = mysqli_query($connect, $sqlR);
+$db = mysqli_fetch_array($qR);
+$nama_resto = $db['nama_resto'] ?? '';
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -40,7 +30,7 @@ if (isset($_GET['op'])) {
     $op = "";
 }
 
-if ($op == 'edit'){
+if ($op == 'edit') {
     $id = $_GET['id'];
     $sql = "SELECT * FROM review WHERE id = $id";
     $query = mysqli_query($connect, $sql);
@@ -59,7 +49,7 @@ if ($op == 'edit'){
     }
 }
 
-if (isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $id_resto = $_POST['id_resto'];
     $nama_resto = $_POST['nama_resto'];
     $rating = $_POST['rating'];
@@ -78,7 +68,7 @@ if (isset($_POST['submit'])){
         $file_error = $_FILES["foto"]["error"];
 
         if ($file_error === 0) {
-            $file_destination = "uploads/" . $id_resto. "-". rand(1,1000). "_". $date . "_" . $user_id . "_" . $file_name;
+            $file_destination = "uploads/" . $id_resto . "-" . rand(1, 1000) . "_" . $date . "_" . $user_id . "_" . $file_name;
             if (!is_dir("uploads")) {
                 mkdir("uploads");
             }
@@ -88,28 +78,38 @@ if (isset($_POST['submit'])){
             $error = "Gagal mengunggah file";
         }
     }
-    
+
     //untuk insert data ke database
-    if ($id_resto && $rating && $pesan && $user_id && $date && $nama_resto){
-        if ($op == 'edit'){
+    if ($id_resto && $rating && $pesan && $user_id && $date && $nama_resto) {
+        if ($op == 'edit') {
+            //jika tidak mengupload gambar maka hapus gambar lama
+            if ($image == "") {
+                $sqlG = "SELECT image FROM review WHERE id = '$id'";
+                $qG = mysqli_query($connect, $sqlG);
+                $row = mysqli_fetch_assoc($qG);
+                $imagePath = isset($row['image']) ? $row['image'] : '';
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             $edit = true;
             $sql = "UPDATE review SET rating='$rating', date='$date', id_resto='$id_resto', nama_resto='$nama_resto', pesan='$pesan', image='$image', user_id='$user_id', edited ='$edit'  WHERE id = $id";
             $query = mysqli_query($connect, $sql);
             if ($query) {
-                header("location:detail$id_resto.php?op=ulasan_edit");
+                header("location:detail.php?resto=$id_resto&op=ulasan_edit");
             } else {
                 echo "<script>alert('Data gagal diubah');</script>";
             }
-        }else {
+        } else {
             $sql = "INSERT INTO review (rating, date, id_resto, nama_resto, pesan, image, user_id) VALUES ('$rating', '$date', '$id_resto', '$nama_resto', '$pesan', '$image', '$user_id')";
             $query = mysqli_query($connect, $sql);
             if ($query) {
-                header("location:detail$id_resto.php?op=ulasan_sukses");
+                header("location:detail.php?resto=$id_resto&op=ulasan_sukses");
             } else {
                 echo "<script>alert('Data gagal ditambahkan');</script>";
             }
         }
-    
+
     }
 }
 
@@ -236,11 +236,16 @@ if (isset($_POST['submit'])){
             <label for="rating">Bagaimana penilaian Anda tentang pengalaman Anda?</label>
             <div class="rating">
                 <select id="rating" name="rating" required>
-                    <option value="1" <?php if ($rating == "1") echo "selected"; ?>>⭐</option>
-                    <option value="2" <?php if ($rating == "2") echo "selected"; ?>>⭐⭐</option>
-                    <option value="3" <?php if ($rating == "3") echo "selected"; ?>>⭐⭐⭐</option>
-                    <option value="4" <?php if ($rating == "4") echo "selected"; ?>>⭐⭐⭐⭐</option>
-                    <option value="5" <?php if ($rating == "5") echo "selected"; ?>>⭐⭐⭐⭐⭐</option>
+                    <option value="1" <?php if ($rating == "1")
+                        echo "selected"; ?>>⭐</option>
+                    <option value="2" <?php if ($rating == "2")
+                        echo "selected"; ?>>⭐⭐</option>
+                    <option value="3" <?php if ($rating == "3")
+                        echo "selected"; ?>>⭐⭐⭐</option>
+                    <option value="4" <?php if ($rating == "4")
+                        echo "selected"; ?>>⭐⭐⭐⭐</option>
+                    <option value="5" <?php if ($rating == "5")
+                        echo "selected"; ?>>⭐⭐⭐⭐⭐</option>
                 </select>
             </div>
 

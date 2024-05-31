@@ -1,4 +1,5 @@
 <?php
+include 'koneksi.php';
 session_start();
 $op = "";
 
@@ -55,77 +56,21 @@ if (isset($_COOKIE['user']) &&!isset($_SESSION['user'])) {
         <section class="resto-terdekat">
             <h2>Restoran Terbaik Di Dekat Anda</h2>
             <div class="resto-list">
-                <a href="detail1.php" style="text-decoration: none; color: black;">
+                <?php 
+                 $sql = "SELECT * FROM restoran ORDER BY id_resto ASC";
+                 $q = mysqli_query($connect, $sql);
+                 while ($r = mysqli_fetch_array($q)) { ?>
+                <a href="detail.php?resto=<?php echo $r['id_resto']?>" style="text-decoration: none; color: black;">
                     <div class="resto-item">
-                        <img src="img/tm.jpg" alt="restoran">
+                        <img src="img/grid<?php echo $r['id_resto']?>.jpg" alt="restoran">
                         <div class="resto-details">
-                            <h3>Eastern Kopi TM Seturan</h3>
-                            <p style="color: green; font-weight: bold;">09:00 - 22:00</p>
-                            <p style="color: black; opacity: 0.6;">Jl. Seturan Raya No.A9-10, Kledokan, Caturtunggal.</p>
+                            <h3><?php echo $r['nama_resto'] ?></h3>
+                            <p style="color: green; font-weight: bold;"><?php echo $r['jam']?></p>
+                            <p style="color: black; opacity: 0.6; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><?php echo $r['alamat'] ?></p>
                         </div>
                     </div>
                 </a>
-                <a href="detail2.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/gacoan.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>Mie Gacoan Babarsari</h3>
-                            <p style="color: green; font-weight: bold;">09:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Jl. Babarsari Ruko Raflesia Blok B7-B10, Caturtunggal</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="detail3.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/suharti.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>Ayam Goreng Suharti</h3>
-                            <p style="color: green; font-weight: bold;">08:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Jl. Laksda Adisucipto No.208, Janti, Caturtunggal.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="detail4.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/ft.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>Food Truck Barsa City</h3>
-                            <p style="color: green; font-weight: bold;">15:00 - 23:30</p>
-                            <p style="color: black; opacity: 0.6;">Ngentak, Caturtunggal, Kec. Depok, Kabupaten Sleman.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="detail5.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/otw.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>OTW Ramen</h3>
-                            <p style="color: green; font-weight: bold;">11:00 - 21:00</p>
-                            <p style="color: black; opacity: 0.6;">Jl. Sukun Raya No.8, Jaranan, Banguntapan.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="detail6.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/jco.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>J.Co - Plaza Ambarrukmo</h3>
-                            <p style="color: green; font-weight: bold;">10:00 - 22:00</p>
-                            <p style="color: black; opacity: 0.6;">A - 35 Plaza Ambarukmo, Jl. Laksda Adisucipto.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="detail7.php" style="text-decoration: none; color: black;">
-                    <div class="resto-item">
-                        <img src="img/mcd.jpg" alt="restoran">
-                        <div class="resto-details">
-                            <h3>McDonald's Ambarukmo</h3>
-                            <p style="color: green; font-weight: bold;">24 Jam</p>
-                            <p style="color: black; opacity: 0.6;">Jl. Laksda Adisucipto No.21, Ambarukmo, Caturtunggal.</p>
-                        </div>
-                    </div>
-                </a>
-                <!--- kalau mau ditambah --->
+                <?php } ?>
             </div>
         </section>
     </main>
