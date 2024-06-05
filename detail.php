@@ -3,15 +3,16 @@ include 'koneksi.php';
 session_start();
 $user_session = empty($_SESSION['user']) ? '' : $_SESSION['user'];
 
-if (isset($_COOKIE['user']) && !isset($_SESSION['user'])) {
-    $_SESSION['user'] = $_COOKIE['user'];
-    header("location:detail1.php");
-    exit();
-}
-
 //untuk menampilkan data restoran
 if (isset($_GET["resto"])) {
     $resto_id = $_GET["resto"];
+
+    if (isset($_COOKIE['user']) && !isset($_SESSION['user'])) {
+        $_SESSION['user'] = $_COOKIE['user'];
+        header("location:detail$resto_id.php");
+        exit();
+    }
+
     if (isset($_GET["op"])) {
         $op = $_GET["op"];
     } else {
